@@ -43,7 +43,7 @@
   <section id="collection" class="collection">
     <h2>Featured Collection</h2>
     <p class="section-text">Select your favorite design and place order directly on WhatsApp.</p>
-    <div class="product-grid">
+    <div class="product-grid" id="productGrid"></div>
       <article class="product-card">
        <img src="red-royal-bridal-lehenga.jpg" alt="Red Royal Bridal Lehenga" />
         <h3>Red Royal Bridal Lehenga</h3>
@@ -91,5 +91,24 @@
   <footer>
     <p>© 2026 Pakistani Bridal Culture. All Rights Reserved.</p>
   </footer>
+  <script>
+const repoApi = "https://api.github.com/repos/shumailakhan7822-cyber/pakistanibridalculture/contents/";
+
+fetch(repoApi)
+  .then(res => res.json())
+  .then(files => {
+    const grid = document.getElementById("productGrid");
+    const images = files.filter(file =>
+      file.name.match(/\.(jpg|jpeg|png|webp)$/i)
+    );
+
+    grid.innerHTML = images.map(file => `
+      <article class="product-card">
+        <img src="${file.download_url}" alt="Pakistani Bridal Dress">
+        <h3>${file.name}</h3>
+      </article>
+    `).join("");
+  });
+</script>
 </body>
 </html>
